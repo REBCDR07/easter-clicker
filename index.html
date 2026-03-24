@@ -3,18 +3,27 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>PutaClic - Special Paques</title>
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="styles.css">
   </head>
   <body>
  <div id="screen-menu" class="screen active">
-          <h1>PutaClic</h1>
-          <p>Special Paques</p>
+          <div id="instructions" onclick="this.classList.toggle('open')">
+              <h4>Comment jouer ?</h4>
+              <div class="instructions-content">
+                  <p>Clique sur les oeufs pour marquer des points !</p>
+                  <p>🍫 Chocolat = +1 pt</p>
+                  <p>🌟 Oeuf dore = +5 pts</p>
+                  <p>🐔 Poule = -2 pts</p>
+                  <p>Rate un oeuf ou clique dans le vide = Game Over !</p>
+              </div>
+          </div>
+          <img src="assets/title.png" alt="PutaClic - Spécial Pâques" class="title-logo">
 
           <div class="menu-buttons">
-              <button data-difficulty="easy">Petit poussin</button>
-              <button data-difficulty="medium">Lapin malin</button>
-              <button data-difficulty="hard">Chasseur d'oeufs</button>
+              <button data-difficulty="easy">Petit poussin <img src="assets/shield-easy.png" alt="bouclier" class="btn-icon"></button>
+              <button data-difficulty="medium">Lapin malin <img src="assets/swords-medium.png" alt="épées" class="btn-icon"></button>
+              <button data-difficulty="hard">Chasseur d'oeufs <img src="assets/skull-hard.png" alt="crâne" class="btn-icon"></button>
           </div>
 
           <div id="high-scores">
@@ -28,7 +37,7 @@
        <div id="screen-game" class="screen">
           <div id="hud">
               <span>Score : <span id="score">0</span></span>
-              <span id="combo-display"></span>
+
               <span>Temps : <span id="timer">60</span>s</span>
           </div>
           <div id="game-area"></div>
