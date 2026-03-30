@@ -1,6 +1,5 @@
 :root {
     --color-bg: #14120f;
-    --color-bg-overlay: rgba(20, 18, 15, 0.75);
     --color-text: #ede7dc;
     --color-accent: #d4943a;
     --font-heading: 'VT323', monospace;
@@ -65,7 +64,7 @@ body {
     top: 20px;
     right: 20px;
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='200'%3E%3Cpath d='M20 0 L25 30 L18 60 L24 95 L16 130 L22 170 L18 200' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M25 30 L40 35' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M16 130 L8 125' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M130 200 L135 165 L128 130 L136 90 L125 55 L132 20 L128 0' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M135 165 L148 160' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M125 55 L115 50' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M220 0 L215 40 L222 75 L210 110' stroke='rgba(200,190,175,0.12)' stroke-width='1.8' fill='none'/%3E%3Cpath d='M70 0 L75 25 L68 50' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M180 200 L185 175 L178 150' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     color: var(--color-text);
@@ -164,7 +163,7 @@ button:hover {
 
 .menu-buttons button:hover {
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='60'%3E%3Cpath d='M30 0 L35 18 L28 35 L33 60' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M33 18 L45 22' stroke='rgba(0,0,0,0.7)' stroke-width='2' fill='none'/%3E%3Cpath d='M120 60 L125 40 L118 25 L130 10 L126 0' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M125 40 L135 36' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M280 0 L275 15 L282 30 L270 48 L278 60' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M275 15 L265 18' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M370 60 L365 42 L372 28 L360 12 L368 0' stroke='rgba(0,0,0,0.7)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M372 28 L380 25' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M200 0 L195 12 L205 20' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M320 60 L325 48 L318 40' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #45403b 0%, #332f2c 40%, #262321 100%);
     border-color: #5a5550;
     color: #e0c080;
@@ -178,6 +177,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: 30px;
 }
 
 .menu-buttons button {
@@ -192,7 +192,7 @@ button:hover {
     letter-spacing: 0.05em;
     color: #c4a46a;
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='60'%3E%3Cpath d='M30 0 L35 18 L28 35 L33 60' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M33 18 L45 22' stroke='rgba(0,0,0,0.7)' stroke-width='2' fill='none'/%3E%3Cpath d='M120 60 L125 40 L118 25 L130 10 L126 0' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M125 40 L135 36' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M280 0 L275 15 L282 30 L270 48 L278 60' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M275 15 L265 18' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M370 60 L365 42 L372 28 L360 12 L368 0' stroke='rgba(0,0,0,0.7)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M372 28 L380 25' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M200 0 L195 12 L205 20' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M320 60 L325 48 L318 40' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     border-radius: 8px;
@@ -229,10 +229,6 @@ button:hover {
     transform: translateY(-50%) scaleX(-1);
 }
 
-.emoji-right {
-    font-size: 1.6rem;
-}
-
 .btn-icon {
     width: 52px;
     height: 52px;
@@ -245,6 +241,7 @@ button:hover {
     position: relative;
     overflow: hidden;
     gap: 24px;
+    justify-content: center;
 }
 
 #screen-gameover::before {
@@ -262,7 +259,7 @@ button:hover {
     font-size: clamp(2rem, 5vw, 3rem);
     color: var(--color-accent);
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='80'%3E%3Cpath d='M50 0 L55 25 L48 50 L54 80' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M55 25 L65 28' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M250 80 L255 55 L248 30 L256 0' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M248 30 L238 27' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M350 0 L345 20 L352 45' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     border-radius: 8px;
@@ -280,7 +277,7 @@ button:hover {
     font-family: 'MedievalSharp', cursive;
     font-size: 1.15rem;
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='40'%3E%3Cpath d='M30 0 L35 12 L28 28 L33 40' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M200 40 L205 22 L198 10 L204 0' stroke='rgba(0,0,0,0.7)' stroke-width='2.5' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     border-radius: 8px;
@@ -294,7 +291,7 @@ button:hover {
 #screen-gameover button {
     font-family: 'MedievalSharp', cursive;
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='50'%3E%3Cpath d='M25 0 L30 15 L23 35 L28 50' stroke='rgba(0,0,0,0.75)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M30 15 L40 18' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M150 50 L155 30 L148 12 L154 0' stroke='rgba(0,0,0,0.7)' stroke-width='2.5' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     color: #c4a46a;
@@ -317,7 +314,7 @@ button:hover {
     font-size: 0.9rem;
     line-height: 1.8;
     background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='200'%3E%3Cpath d='M20 0 L25 30 L18 60 L24 95 L16 130 L22 170 L18 200' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M25 30 L40 35' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M16 130 L8 125' stroke='rgba(0,0,0,0.65)' stroke-width='2' fill='none'/%3E%3Cpath d='M130 200 L135 165 L128 130 L136 90 L125 55 L132 20 L128 0' stroke='rgba(0,0,0,0.8)' stroke-width='2.5' fill='none'/%3E%3Cpath d='M135 165 L148 160' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M125 55 L115 50' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M220 0 L215 40 L222 75 L210 110' stroke='rgba(200,190,175,0.12)' stroke-width='1.8' fill='none'/%3E%3Cpath d='M70 0 L75 25 L68 50' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3Cpath d='M180 200 L185 175 L178 150' stroke='rgba(0,0,0,0.6)' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/cover no-repeat,
+        url('assets/cracks.png') center/cover no-repeat,
         linear-gradient(170deg, #3a3632 0%, #2a2725 40%, #1f1d1b 100%);
     border: 2px solid #4a4540;
     border-radius: 8px;
@@ -399,4 +396,151 @@ button:hover {
 @keyframes flash-red {
     0% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .screen {
+        padding-top: 0;
+        gap: 0;
+    }
+
+    #screen-menu {
+        justify-content: space-evenly;
+    }
+
+    #screen-menu::before {
+        background: url('assets/bg-castle-mobile.png') center/cover no-repeat;
+    }
+
+    .title-logo {
+        width: clamp(200px, 70vw, 400px);
+        margin-top: 12vh;
+    }
+
+    .menu-buttons {
+        margin-top: -8vh;
+    }
+
+    #instructions {
+        top: 10px;
+        right: 10px;
+        padding: 10px 14px;
+        font-size: 0.65rem;
+        max-width: 45vw;
+    }
+
+    #high-scores {
+        position: relative;
+        top: auto;
+        left: auto;
+        text-align: center;
+        width: 85vw;
+        max-width: 420px;
+        font-size: 0.8rem;
+    }
+
+    .menu-buttons button {
+        width: 85vw;
+        max-width: 420px;
+        font-size: 1rem;
+        padding: 14px 24px;
+    }
+
+    .menu-buttons button::before,
+    .menu-buttons button::after {
+        font-size: 1.1rem;
+    }
+
+    .btn-icon {
+        width: 40px;
+        height: 40px;
+        margin: -10px 0;
+    }
+
+    #hud {
+        padding: 10px 18px;
+        font-size: 1.2rem;
+    }
+
+    #game-area {
+        background: url('assets/bg-castle-mobile.png') center/cover no-repeat;
+    }
+
+    .game-object {
+        width: 150px;
+        height: 150px;
+    }
+
+    .floating-score {
+        font-size: 2rem;
+    }
+
+    .floating-score.golden {
+        font-size: 2.5rem;
+    }
+
+    #screen-gameover {
+        justify-content: center;
+    }
+
+    #screen-gameover::before {
+        background: url('assets/bg-castle-mobile.png') center/cover no-repeat;
+    }
+
+    #screen-gameover h1 {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+        padding: 12px 24px;
+    }
+
+    #screen-gameover p {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    #screen-gameover button {
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+
+    #new-record {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .screen {
+        padding-top: 3vh;
+        gap: 10px;
+    }
+
+    .title-logo {
+        width: 85vw;
+    }
+
+    .menu-buttons button {
+        width: 90vw;
+        font-size: 0.9rem;
+        padding: 12px 18px;
+    }
+
+    .btn-icon {
+        width: 34px;
+        height: 34px;
+        margin: -8px 0;
+    }
+
+    #instructions {
+        max-width: 55vw;
+        font-size: 0.6rem;
+    }
+
+    .game-object {
+        width: 110px;
+        height: 110px;
+    }
+
+    #hud {
+        padding: 8px 14px;
+        font-size: 1rem;
+    }
 }

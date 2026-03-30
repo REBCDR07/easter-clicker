@@ -103,10 +103,18 @@ Les objets apparaissent aléatoirement et disparaissent rapidement.
 
 ---
 
+## 🎵 Crédits
+
+Music: "Heroic Age" by Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 4.0
+http://creativecommons.org/licenses/by/4.0/
+
+---
+
 ## 🛠️ Tech
 
-- JavaScript  
-- HTML / CSS  
+- JavaScript
+- HTML / CSS
 - Canvas (optionnel mais stylé 😎)
 
 ---

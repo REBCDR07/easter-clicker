@@ -4,53 +4,74 @@ const timerDisplay = document.getElementById("timer");
 
 const audio = new AudioContext();
 
-function playSound(freq, duration, type = "sine") {
+function playNote(freq, duration, type = "sine", vol = 0.12, delay = 0) {
+    const t = audio.currentTime + delay;
     const osc = audio.createOscillator();
     const gain = audio.createGain();
     osc.type = type;
     osc.frequency.value = freq;
-    gain.gain.value = 0.15;
-    gain.gain.linearRampToValueAtTime(0, audio.currentTime + duration);
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.linearRampToValueAtTime(0, t + duration);
     osc.connect(gain).connect(audio.destination);
-    osc.start();
-    osc.stop(audio.currentTime + duration);
+    osc.start(t);
+    osc.stop(t + duration);
 }
 
-let musicInterval = null;
+function playNoise(duration, vol = 0.15, delay = 0) {
+    const t = audio.currentTime + delay;
+    const buf = audio.createBuffer(1, audio.sampleRate * duration, audio.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+    const src = audio.createBufferSource();
+    src.buffer = buf;
+    const gain = audio.createGain();
+    const filter = audio.createBiquadFilter();
+    filter.type = "highpass";
+    filter.frequency.value = 3000;
+    gain.gain.setValueAtTime(vol, t);
+    gain.gain.linearRampToValueAtTime(0, t + duration);
+    src.connect(filter).connect(gain).connect(audio.destination);
+    src.start(t);
+}
+
+function playCollect() {
+    playNoise(0.08, 0.18);
+    playNote(800, 0.06, "sawtooth", 0.1);
+    playNote(1200, 0.04, "sawtooth", 0.06, 0.02);
+}
+
+function playGolden() {
+    playNoise(0.12, 0.2);
+    playNote(600, 0.08, "sawtooth", 0.12);
+    playNote(900, 0.06, "sawtooth", 0.1, 0.03);
+    playNote(1400, 0.1, "sawtooth", 0.08, 0.06);
+    playNote(200, 0.3, "triangle", 0.06, 0.1);
+}
+
+function playMalus() {
+    playNote(150, 0.15, "sawtooth", 0.15);
+    playNote(80, 0.4, "square", 0.12, 0.05);
+    playNoise(0.1, 0.1, 0.02);
+}
+
+function playGameOver() {
+    playNote(250, 0.3, "sawtooth", 0.12);
+    playNote(180, 0.4, "sawtooth", 0.1, 0.2);
+    playNote(100, 0.6, "square", 0.08, 0.5);
+    playNoise(0.15, 0.08);
+}
+
+const music = new Audio("assets/heroic-age.mp3");
+music.loop = true;
+music.volume = 0.3;
 
 function startMusic() {
-    const melody = [392, 440, 494, 523, 587, 523, 494, 440, 392, 330, 349, 392, 440, 392, 349, 330];
-    let i = 0;
-    musicInterval = setInterval(() => {
-        const note = melody[i % melody.length];
-
-        const osc1 = audio.createOscillator();
-        const gain1 = audio.createGain();
-        osc1.type = "sine";
-        osc1.frequency.value = note;
-        gain1.gain.value = 0.03;
-        gain1.gain.linearRampToValueAtTime(0, audio.currentTime + 0.4);
-        osc1.connect(gain1).connect(audio.destination);
-        osc1.start();
-        osc1.stop(audio.currentTime + 0.4);
-
-        if (i % 4 === 0) {
-            const osc2 = audio.createOscillator();
-            const gain2 = audio.createGain();
-            osc2.type = "triangle";
-            osc2.frequency.value = note / 2;
-            gain2.gain.value = 0.02;
-            gain2.gain.linearRampToValueAtTime(0, audio.currentTime + 0.8);
-            osc2.connect(gain2).connect(audio.destination);
-            osc2.start();
-            osc2.stop(audio.currentTime + 0.8);
-        }
-        i++;
-    }, 300);
+    music.currentTime = 3;
+    music.play();
 }
 
 function stopMusic() {
-    clearInterval(musicInterval);
+    music.pause();
 }
 
 let score = 0;
@@ -113,7 +134,7 @@ function endGame() {
     if (score > best) localStorage.setItem("best_" + difficulty, score);
 
     stopMusic();
-    playSound(300, 0.2); playSound(200, 0.3);
+    playGameOver();
     loadHighScores();
     showScreen("screen-gameover");
 }
@@ -169,9 +190,9 @@ function spawnObject() {
         e.stopPropagation();
         score = Math.max(0, score + type.points);
         scoreDisplay.textContent = score;
-        if (type.points === 5) { playSound(800, 0.15); playSound(1200, 0.15); }
-        else if (type.points < 0) playSound(200, 0.3, "sawtooth");
-        else playSound(600, 0.1);
+        if (type.points === 5) playGolden();
+        else if (type.points < 0) playMalus();
+        else playCollect();
 
         const rect = el.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
