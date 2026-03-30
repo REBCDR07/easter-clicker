@@ -63,7 +63,7 @@ function playGameOver() {
 
 const music = new Audio("assets/heroic-age.mp3");
 music.loop = true;
-music.volume = 0.3;
+music.volume = 0.15;
 
 function startMusic() {
     music.currentTime = 3;
