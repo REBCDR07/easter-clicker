@@ -21,8 +21,6 @@ body {
     color: var(--color-text);
 }
 
-/* ===== SCREENS ===== */
-
 .screen {
     display: none;
     flex-direction: column;
@@ -38,8 +36,6 @@ body {
 .screen.active {
     display: flex;
 }
-
-/* ===== MENU SCREEN ===== */
 
 #screen-menu {
     position: relative;
@@ -63,8 +59,6 @@ body {
     filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
 }
 
-
-/* ===== INSTRUCTIONS (blurry panel) ===== */
 
 #instructions {
     position: absolute;
@@ -103,8 +97,6 @@ body {
     display: block;
 }
 
-/* ===== HUD ===== */
-
 #hud {
     display: flex;
     justify-content: space-between;
@@ -124,8 +116,6 @@ body {
     z-index: 10;
     text-shadow: 0 0 10px rgba(212, 148, 58, 0.5), 0 2px 6px rgba(0, 0, 0, 0.9);
 }
-
-/* ===== GAME AREA ===== */
 
 #screen-game {
     padding-top: 0;
@@ -150,8 +140,6 @@ body {
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
-
-/* ===== BUTTONS ===== */
 
 button {
     padding: 18px 32px;
@@ -253,8 +241,6 @@ button:hover {
     margin: -14px 0;
 }
 
-/* ===== GAME OVER SCREEN ===== */
-
 #screen-gameover {
     position: relative;
     overflow: hidden;
@@ -322,8 +308,6 @@ button:hover {
         0 1px 1px rgba(200, 170, 110, 0.2);
 }
 
-/* ===== HIGH SCORES ===== */
-
 #high-scores {
     position: absolute;
     top: 30px;
@@ -351,16 +335,12 @@ button:hover {
     margin-bottom: 6px;
 }
 
-/* ===== NEW RECORD ===== */
-
 #new-record {
     font-family: 'MedievalSharp', cursive;
     color: var(--color-accent);
     font-size: 1.8rem;
     text-shadow: 0 0 20px rgba(212, 148, 58, 0.5);
 }
-
-/* ===== CLICK EFFECTS ===== */
 
 .particle {
     position: fixed;
