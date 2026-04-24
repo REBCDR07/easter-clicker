@@ -2,6 +2,7 @@ const gameArea = document.getElementById("game-area");
 const scoreDisplay = document.getElementById("score");
 const comboDisplay = document.getElementById("combo");
 const timerDisplay = document.getElementById("timer");
+const livesIconsDisplay = document.getElementById("lives-icons");
 const pauseButton = document.getElementById("btn-pause");
 const muteButton = document.getElementById("btn-mute");
 const instructionsButton = document.getElementById("btn-instructions");
@@ -12,6 +13,9 @@ const helpModal = document.getElementById("help-modal");
 const helpModalTitle = document.getElementById("help-modal-title");
 const helpModalContent = document.getElementById("help-modal-content");
 const helpModalClose = document.getElementById("help-modal-close");
+const lifeModal = document.getElementById("life-modal");
+const lifeModalText = document.getElementById("life-modal-text");
+const lifeModalResume = document.getElementById("life-modal-resume");
 
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 const audio = AudioCtx ? new AudioCtx() : null;
@@ -20,6 +24,7 @@ const BASE_MUSIC_VOLUME = 0.15;
 const OBJECT_LIFETIME_MS = 2000;
 const COMBO_STEP = 3;
 const MAX_COMBO_MULTIPLIER = 5;
+const DEFAULT_LIVES = 3;
 const STORAGE_MUTE_KEY = "putaclic_muted";
 const MODAL_TRANSITION_MS = 220;
 
@@ -28,6 +33,8 @@ music.loop = true;
 music.volume = BASE_MUSIC_VOLUME;
 
 let score = 0;
+let lives = DEFAULT_LIVES;
+let maxLives = DEFAULT_LIVES;
 let comboStreak = 0;
 let comboMultiplier = 1;
 let timeLeft = 0;
@@ -50,9 +57,9 @@ const types = [
 ];
 
 const settings = {
-  easy: { duration: 60, spawnRate: 1200 },
-  medium: { duration: 45, spawnRate: 800 },
-  hard: { duration: 30, spawnRate: 500 },
+  easy: { duration: 60, spawnRate: 1200, lives: 5 },
+  medium: { duration: 45, spawnRate: 800, lives: 4 },
+  hard: { duration: 30, spawnRate: 500, lives: 3 },
 };
 
 const HELP_BY_MODE = {
@@ -63,6 +70,8 @@ const HELP_BY_MODE = {
         heading: "Comment ca marche",
         items: [
           "Partie de 60 secondes avec un rythme plus calme.",
+          "Tu commences avec 5 vies (boucliers).",
+          "Chaque vie perdue met la partie en pause: appuie sur Reprendre.",
           "Les objets apparaissent moins vite pour t'habituer.",
           "Tu dois cliquer chaque bon objet avant sa disparition.",
         ],
@@ -79,8 +88,8 @@ const HELP_BY_MODE = {
         heading: "A ne pas faire",
         items: [
           "Ne clique pas sur la poule: -2 points et combo remis a x1.",
-          "Ne clique pas dans le vide: partie terminee.",
-          "Ne laisse pas un oeuf positif disparaitre.",
+          "Ne clique pas dans le vide: tu perds 1 vie.",
+          "Ne laisse pas un oeuf positif disparaitre: tu perds 1 vie.",
         ],
       },
     ],
@@ -92,6 +101,8 @@ const HELP_BY_MODE = {
         heading: "Comment ca marche",
         items: [
           "Partie de 45 secondes avec un rythme nerveux.",
+          "Tu commences avec 4 vies (boucliers).",
+          "Chaque vie perdue met la partie en pause: appuie sur Reprendre.",
           "Le temps de reaction devient plus court.",
           "Garde un rythme regulier pour maintenir le combo.",
         ],
@@ -108,7 +119,7 @@ const HELP_BY_MODE = {
         heading: "A ne pas faire",
         items: [
           "Ne poursuis pas une poule au milieu d'un paquet d'oeufs.",
-          "Ne panique pas et ne spam pas les clics dans le decor.",
+          "Ne panique pas et ne clique pas dans le decor: -1 vie.",
           "Ne casse pas ta serie de bons clics inutilement.",
         ],
       },
@@ -121,6 +132,8 @@ const HELP_BY_MODE = {
         heading: "Comment ca marche",
         items: [
           "Partie de 30 secondes, tres rapide.",
+          "Tu commences avec 3 vies (boucliers).",
+          "Chaque vie perdue met la partie en pause: appuie sur Reprendre.",
           "Les apparitions s'enchainent presque sans pause.",
           "Il faut cliquer juste, vite et sans erreur.",
         ],
@@ -136,8 +149,8 @@ const HELP_BY_MODE = {
       {
         heading: "A ne pas faire",
         items: [
-          "Un clic dans le vide = fin immediate.",
-          "Une disparition d'oeuf positif = fin immediate.",
+          "Un clic dans le vide = -1 vie.",
+          "Une disparition d'oeuf positif = -1 vie.",
           "Un clic poule au mauvais moment peut ruiner ton record.",
         ],
       },
@@ -280,6 +293,61 @@ function updateTimer() {
   timerDisplay.textContent = timeLeft;
 }
 
+function getLivesLabel(count) {
+  return count > 1 ? "vies" : "vie";
+}
+
+function updateLives() {
+  if (!livesIconsDisplay) return;
+
+  livesIconsDisplay.innerHTML = "";
+  for (let i = 0; i < maxLives; i++) {
+    const icon = document.createElement("span");
+    icon.className = "life-icon";
+    if (i >= lives) icon.classList.add("is-lost");
+    icon.setAttribute("aria-hidden", "true");
+    livesIconsDisplay.appendChild(icon);
+  }
+
+  const suffix = lives > 1 ? "restantes" : "restante";
+  livesIconsDisplay.setAttribute(
+    "aria-label",
+    lives + " " + getLivesLabel(lives) + " " + suffix
+  );
+}
+
+function isLifeModalOpen() {
+  return !!lifeModal && lifeModal.classList.contains("is-open");
+}
+
+function hideLifeModal() {
+  if (lifeModal) lifeModal.classList.remove("is-open");
+}
+
+function showLifeModal() {
+  if (!lifeModal || !lifeModalText) return;
+
+  const suffix = lives > 1 ? "restantes" : "restante";
+  lifeModalText.textContent =
+    "Vie perdue ! Il te reste " +
+    lives +
+    " " +
+    getLivesLabel(lives) +
+    " " +
+    suffix +
+    ".";
+
+  lifeModal.classList.add("is-open");
+  if (lifeModalResume) lifeModalResume.focus();
+}
+
+function resumeAfterLifeLoss() {
+  if (!isGameActive || !isLifeModalOpen()) return;
+
+  hideLifeModal();
+  if (isPaused) togglePause();
+}
+
 function updateComboDisplay() {
   comboDisplay.textContent = "x" + comboMultiplier;
   comboDisplay.classList.toggle("combo-active", comboMultiplier > 1);
@@ -344,9 +412,12 @@ function startGame(key) {
   resetRun();
   closeInstructionsMenu();
   closeHelpModal(true);
+  hideLifeModal();
 
   difficulty = key;
   score = 0;
+  maxLives = settings[key].lives || DEFAULT_LIVES;
+  lives = maxLives;
   timeLeft = settings[key].duration;
   isGameActive = true;
   isPaused = false;
@@ -354,6 +425,7 @@ function startGame(key) {
   gameArea.innerHTML = "";
   updateScore();
   updateTimer();
+  updateLives();
   resetCombo();
 
   showScreen("screen-game");
@@ -369,7 +441,28 @@ function startGame(key) {
 
 function onMissClick(e) {
   if (!isGameActive || isPaused) return;
-  if (e.target === gameArea) endGame();
+  if (e.target === gameArea) loseLife();
+}
+
+function loseLife() {
+  if (!isGameActive || isPaused) return;
+
+  lives = Math.max(0, lives - 1);
+  updateLives();
+  resetCombo();
+
+  clearActiveObjects();
+  flashRed();
+  playMalus();
+
+  if (lives <= 0) {
+    hideLifeModal();
+    endGame();
+    return;
+  }
+
+  if (!isPaused) togglePause();
+  showLifeModal();
 }
 
 function getBestScore(key) {
@@ -388,6 +481,7 @@ function endGame() {
   isGameActive = false;
   isPaused = false;
   resetRun();
+  hideLifeModal();
 
   document.getElementById("final-score").textContent = score;
 
@@ -446,6 +540,7 @@ function goToMenu() {
   }
 
   setPauseUI();
+  hideLifeModal();
   closeHelpModal(true);
   closeInstructionsMenu();
   showScreen("screen-menu");
@@ -465,7 +560,7 @@ function expireObject(state) {
   state.el.remove();
 
   if (state.type.points > 0 && isGameActive && !isPaused) {
-    endGame();
+    loseLife();
   }
 }
 
@@ -718,8 +813,29 @@ helpModal.addEventListener("click", (event) => {
   if (event.target === helpModal) closeHelpModal();
 });
 
+if (lifeModalResume) {
+  lifeModalResume.addEventListener("click", resumeAfterLifeLoss);
+}
+
+if (lifeModal) {
+  lifeModal.addEventListener("click", (event) => {
+    if (event.target === lifeModal) resumeAfterLifeLoss();
+  });
+}
+
 document.addEventListener("keydown", (event) => {
+  if (isLifeModalOpen() && (event.key === "Enter" || event.key === " ")) {
+    event.preventDefault();
+    resumeAfterLifeLoss();
+    return;
+  }
+
   if (event.key !== "Escape") return;
+
+  if (isLifeModalOpen()) {
+    resumeAfterLifeLoss();
+    return;
+  }
 
   if (!helpModal.hidden) {
     closeHelpModal();
@@ -746,4 +862,5 @@ document.addEventListener("visibilitychange", () => {
 updateMuteUI();
 applyMuteState();
 setPauseUI();
+updateLives();
 loadHighScores();
